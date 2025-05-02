@@ -15,6 +15,8 @@ from src.ui.components.log_manager import LogManager
 from src.ui.panels.settings_panel import SettingsPanel
 from src.ui.panels.vendor_panel import VendorPanel
 from src.utils.browser_utils import get_browser_path
+from src.utils.sound_utils import play_completion_sound
+from src.utils.time_utils import estimate_total_time, format_time_estimate
 
 
 class WhatsAppSenderApp:
@@ -138,9 +140,19 @@ class WhatsAppSenderApp:
         delays = DelayConfig.from_vars(self.settings_panel.delay_vars)
         browser_path = get_browser_path(vendor)
 
-        self.vendor_panel.set_buttons_state(tk.DISABLED)
+        # Calculate time estimate
+        total_time = estimate_total_time(len(messages), vars(delays))
+        time_estimate = format_time_estimate(total_time)
 
+        # Show confirmation dialog with time estimate
+        message = f"Estimated time to send {len(messages)} messages: {time_estimate}\n\nDo you want to proceed?"
+        if not messagebox.askyesno("Confirm Send", message):
+            self.log_manager.log("Operation cancelled by user")
+            return
+
+        self.vendor_panel.set_buttons_state(tk.DISABLED)
         self.status_var.set(f"Sending messages for {vendor}...")
+
         threading.Thread(
             target=self._send_messages_thread,
             args=(messages, vendor, delays, browser_path),
@@ -174,6 +186,9 @@ class WhatsAppSenderApp:
             self.log_manager.log(f"Completed sending messages for {vendor}")
             self.log_manager.log(f"Summary: {success_count} successful, {fail_count} failed out of {total}")
             self.status_var.set(f"Completed: {success_count} sent, {fail_count} failed")
+
+            # Play completion sound
+            play_completion_sound()
 
         except Exception as e:
             self.log_manager.log(f"Error in message sending thread: {str(e)}", "error")
