@@ -42,6 +42,5 @@ venv.bak/
 Thumbs.db
 
 # Project specific
-requirements.txt
 *.log
 *.json
