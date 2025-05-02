@@ -2,7 +2,7 @@
 
 A Python desktop application that automates sending WhatsApp messages to multiple recipients using WhatsApp Web. Built with Tkinter and PyAutoGUI, this tool helps streamline the process of sending bulk messages while maintaining a user-friendly interface.
 
-![WhatsApp Message Sender](https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
+![WhatsApp Message Sender](https://github.com/SanAfaGal/whatsapp-sender/blob/c9fb03b26f5272387040fd890a2d366ba7f77564/preview.png)
 
 ## Key Features
 
