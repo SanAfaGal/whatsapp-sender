@@ -1,8 +1,9 @@
 """WhatsApp message sending service"""
+import os
 import time
 import webbrowser
 from urllib.parse import quote
-import os
+
 import pyautogui
 
 
@@ -26,7 +27,7 @@ def send_whatsapp_message(phone, message, browser_path=None, load_delay=10, clos
 
         # Add country code if not present
         if not phone.startswith("+"):
-            phone = "+52" + phone
+            phone = "+" + phone
 
         # Validate phone number
         if len(phone) < 10:

@@ -15,7 +15,7 @@ from src.ui.components.delay_config import DelayConfig
 from src.ui.components.log_manager import LogManager
 from src.ui.panels.settings_panel import SettingsPanel
 from src.ui.panels.vendor_panel import VendorPanel
-from src.utils.browser_utils import get_browser_path
+from src.utils.browser_utils import browser_manager
 from src.utils.sound_utils import play_completion_sound
 from src.utils.time_utils import estimate_total_time, format_time_estimate
 
@@ -144,7 +144,9 @@ class WhatsAppSenderApp:
             return
 
         delays = DelayConfig.from_vars(self.settings_panel.delay_vars)
-        browser_path = get_browser_path(vendor)
+        browser_id = self.settings_panel.get_selected_browser_id()
+        browser_path = browser_manager.get_browser_path(browser_id)
+        browser_args = browser_manager.get_browser_args(browser_id)
 
         # Calculate time estimate
         total_time = estimate_total_time(len(messages), vars(delays))
@@ -161,7 +163,7 @@ class WhatsAppSenderApp:
 
         threading.Thread(
             target=self._send_messages_thread,
-            args=(messages, vendor, delays, browser_path),
+            args=(messages, vendor, delays, browser_path, browser_args),
             daemon=True
         ).start()
 
@@ -170,7 +172,8 @@ class WhatsAppSenderApp:
             messages: List[dict],
             vendor: str,
             delays: DelayConfig,
-            browser_path: Optional[str]
+            browser_path: Optional[str],
+            browser_args: List[str]
     ) -> None:
         """Thread function to send messages"""
         try:
