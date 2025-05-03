@@ -1,14 +1,32 @@
+# -*- mode: python ; coding: utf-8 -*-
+
 import os
 from PyInstaller.utils.hooks import collect_data_files
 
 block_cipher = None
 
+# Collect browser icons and configuration
+browser_icons = collect_data_files('src', includes=['assets/*.png'])
+browser_config = collect_data_files('src', includes=['config/*.json'])
+
 a = Analysis(
     ['src/app.py'],
     pathex=[os.path.abspath(SPECPATH)],
     binaries=[],
-    datas=[],
-    hiddenimports=['playsound'],
+    datas=[
+        ('src/assets/icon.ico', 'assets'),
+        ('src/config/browsers.json', 'config'),
+        *browser_icons,  # Add all browser icons
+        *browser_config  # Add browser configuration
+    ],
+    hiddenimports=[
+        'playsound',
+        'winreg',
+        'json',
+        'pyautogui',
+        'PIL',
+        'tkinter'
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -28,7 +46,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='WhatsApp Message Sender',
+    name='WhatsApp Sender',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -40,6 +58,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='src/assets/icon.ico',
-    onefile=True
+    icon='src/assets/icon.ico'
 )
