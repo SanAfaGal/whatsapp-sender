@@ -1,6 +1,7 @@
 """
 Main application window module for the WhatsApp Sender application.
 """
+import os
 import threading
 import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox, filedialog
@@ -27,6 +28,11 @@ class WhatsAppSenderApp:
         self.root.title("WhatsApp Message Sender")
         self.root.geometry("800x900")
         self.root.minsize(600, 600)
+
+        # Set window icon
+        icon_path = os.path.join(os.path.dirname(__file__), "..", "assets", "icon.ico")
+        if os.path.exists(icon_path):
+            self.root.iconbitmap(icon_path)
 
         self.styles = AppStyles()
         self.setup_styles()
