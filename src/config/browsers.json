@@ -1,0 +1,44 @@
+{
+  "browsers": [
+    {
+      "name": "Default Browser",
+      "id": "default",
+      "description": "System default web browser"
+    },
+    {
+      "name": "Google Chrome",
+      "id": "chrome",
+      "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "args": ["--new-window"],
+      "icon": "chrome.png"
+    },
+    {
+      "name": "Mozilla Firefox",
+      "id": "firefox",
+      "executable": "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+      "args": ["-new-window"],
+      "icon": "firefox.png"
+    },
+    {
+      "name": "Microsoft Edge",
+      "id": "edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "args": ["--new-window"],
+      "icon": "edge.png"
+    },
+    {
+      "name": "Brave",
+      "id": "brave",
+      "executable": "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
+      "args": ["--new-window"],
+      "icon": "brave.png"
+    },
+    {
+      "name": "Opera",
+      "id": "opera",
+      "executable": "C:\\Program Files\\Opera\\launcher.exe",
+      "args": ["--new-window"],
+      "icon": "opera.png"
+    }
+  ]
+}
